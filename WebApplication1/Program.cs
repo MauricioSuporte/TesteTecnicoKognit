@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IUserApiService, UserApiService>();
+builder.Services.AddSingleton<IWalletService, WalletService>();
+builder.Services.AddSingleton<IWalletApiService, WalletApiService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
