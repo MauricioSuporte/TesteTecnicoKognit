@@ -3,8 +3,8 @@
     public class User
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
+        public required string Nome { get; set; }
         public DateTime Nascimento { get; set; }
-        public string CPF { get; set; }
+        public required string CPF { get; set; }
     }
 }
