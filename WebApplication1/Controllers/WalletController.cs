@@ -14,6 +14,12 @@ namespace UserWalletAPI.Controllers
         public IActionResult CreateWallet([FromBody] WalletRequest walletRequest)
         {
             var walletResponse = _walletApiService.CreateWallet(walletRequest);
+
+            if (walletResponse == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+
             return CreatedAtAction(nameof(CreateWallet), new { id = walletResponse.Id }, walletResponse);
         }
 

@@ -4,7 +4,7 @@ namespace UserWalletAPI.Interfaces.ApiServices
 {
     public interface IWalletApiService
     {
-        WalletResponse CreateWallet(WalletRequest walletRequest);
+        WalletResponse? CreateWallet(WalletRequest walletRequest);
         IEnumerable<WalletResponse> GetWalletsByUser(int userId);
     }
 }

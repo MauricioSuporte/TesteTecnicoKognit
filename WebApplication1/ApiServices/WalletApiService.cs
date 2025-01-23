@@ -9,7 +9,7 @@ namespace UserWalletAPI.ApiServices
     {
         private readonly IWalletService _walletService = walletService;
 
-        public WalletResponse CreateWallet(WalletRequest walletRequest)
+        public WalletResponse? CreateWallet(WalletRequest walletRequest)
         {
             var wallet = new Wallet
             {
@@ -20,6 +20,11 @@ namespace UserWalletAPI.ApiServices
             };
 
             var createdWallet = _walletService.CreateWallet(wallet);
+
+            if (createdWallet == null)
+            {
+                return null;
+            }
 
             var walletResponse = new WalletResponse
             {
