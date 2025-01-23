@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebApplication1\UserWalletAPI.csproj" />
+    <ProjectReference Include="..\UserWalletAPI\UserWalletAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
