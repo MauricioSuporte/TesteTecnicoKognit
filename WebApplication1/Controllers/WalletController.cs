@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UserWalletAPI.DTOs;
 using UserWalletAPI.Interfaces.ApiServices;
-using UserWalletAPI.Models;
 
 namespace UserWalletAPI.Controllers
 {
@@ -11,29 +11,18 @@ namespace UserWalletAPI.Controllers
         private readonly IWalletApiService _walletApiService = walletApiService;
 
         [HttpPost]
-        public IActionResult CreateWallet([FromBody] Wallet wallet)
+        public IActionResult CreateWallet([FromBody] WalletRequest walletRequest)
         {
-            var createdWallet = _walletApiService.CreateWallet(wallet);
-            return CreatedAtAction(nameof(GetWallet), new { id = createdWallet.Id }, createdWallet);
+            var walletResponse = _walletApiService.CreateWallet(walletRequest);
+            return CreatedAtAction(nameof(CreateWallet), new { id = walletResponse.Id }, walletResponse);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetWallet(int id)
+        [HttpGet("{userId}")]
+        public IActionResult GetWalletsByUser(int userId)
         {
-            var wallet = _walletApiService.GetWalletById(id);
-            return wallet is null ? NotFound() : Ok(wallet);
-        }
+            var walletsResponse = _walletApiService.GetWalletsByUser(userId);
 
-        [HttpGet]
-        public IActionResult GetAllWallets()
-        {
-            return Ok(_walletApiService.GetAllWallets());
-        }
-
-        [HttpGet("user/{userId}")]
-        public IActionResult GetWalletsByUserId(int userId)
-        {
-            return Ok(_walletApiService.GetWalletsByUserId(userId));
+            return Ok(walletsResponse);
         }
     }
 }

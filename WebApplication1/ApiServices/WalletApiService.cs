@@ -1,4 +1,5 @@
-﻿using UserWalletAPI.Interfaces.ApiServices;
+﻿using UserWalletAPI.DTOs;
+using UserWalletAPI.Interfaces.ApiServices;
 using UserWalletAPI.Interfaces.Services;
 using UserWalletAPI.Models;
 
@@ -8,24 +9,42 @@ namespace UserWalletAPI.ApiServices
     {
         private readonly IWalletService _walletService = walletService;
 
-        public Wallet CreateWallet(Wallet wallet)
+        public WalletResponse CreateWallet(WalletRequest walletRequest)
         {
-            return _walletService.CreateWallet(wallet);
+            var wallet = new Wallet
+            {
+                UserId = walletRequest.UserId,
+                ValorAtual = walletRequest.ValorAtual,
+                Banco = walletRequest.Banco,
+                UltimaAtualizacao = DateTime.UtcNow
+            };
+
+            var createdWallet = _walletService.CreateWallet(wallet);
+
+            var walletResponse = new WalletResponse
+            {
+                Id = createdWallet.Id,
+                UserId = createdWallet.UserId,
+                ValorAtual = createdWallet.ValorAtual,
+                Banco = createdWallet.Banco,
+                UltimaAtualizacao = createdWallet.UltimaAtualizacao
+            };
+
+            return walletResponse;
         }
 
-        public Wallet? GetWalletById(int id)
+        public IEnumerable<WalletResponse> GetWalletsByUser(int userId)
         {
-            return _walletService.GetWalletById(id);
-        }
+            var wallets = _walletService.GetWalletsByUser(userId);
 
-        public List<Wallet> GetAllWallets()
-        {
-            return _walletService.GetAllWallets();
-        }
-
-        public List<Wallet> GetWalletsByUserId(int userId)
-        {
-            return _walletService.GetWalletsByUserId(userId);
+            return wallets.Select(wallet => new WalletResponse
+            {
+                Id = wallet.Id,
+                UserId = wallet.UserId,
+                ValorAtual = wallet.ValorAtual,
+                Banco = wallet.Banco,
+                UltimaAtualizacao = wallet.UltimaAtualizacao
+            });
         }
     }
 }

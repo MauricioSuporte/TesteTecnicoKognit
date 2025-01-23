@@ -12,15 +12,5 @@ namespace UserWalletAPI.Services
         {
             return _userRepository.CreateUser(user);
         }
-
-        public User? GetUserById(int id)
-        {
-            return _userRepository.GetUserById(id);
-        }
-
-        public List<User> GetAllUsers()
-        {
-            return _userRepository.GetAllUsers();
-        }
     }
 }

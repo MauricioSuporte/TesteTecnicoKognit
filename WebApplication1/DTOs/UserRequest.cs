@@ -1,10 +1,10 @@
-﻿namespace UserWalletAPI.Models
+﻿namespace UserWalletAPI.DTOs
 {
-    public class User
+    public class UserRequest
     {
-        public int Id { get; set; }
         public required string Nome { get; set; }
         public DateTime Nascimento { get; set; }
         public required string Cpf { get; set; }
     }
+
 }

@@ -1,4 +1,5 @@
-﻿using UserWalletAPI.Interfaces.ApiServices;
+﻿using UserWalletAPI.DTOs;
+using UserWalletAPI.Interfaces.ApiServices;
 using UserWalletAPI.Interfaces.Services;
 using UserWalletAPI.Models;
 
@@ -8,19 +9,26 @@ namespace UserWalletAPI.ApiServices
     {
         private readonly IUserService _userService = userService;
 
-        public User CreateUser(User user)
+        public UserResponse CreateUser(UserRequest userRequest)
         {
-            return _userService.CreateUser(user);
-        }
+            var user = new User
+            {
+                Nome = userRequest.Nome,
+                Nascimento = userRequest.Nascimento,
+                Cpf = userRequest.Cpf
+            };
 
-        public User? GetUserById(int id)
-        {
-            return _userService.GetUserById(id);
-        }
+            var createdUser = _userService.CreateUser(user);
 
-        public List<User> GetAllUsers()
-        {
-            return _userService.GetAllUsers();
+            var userResponse = new UserResponse
+            {
+                Id = createdUser.Id,
+                Nome = createdUser.Nome,
+                Nascimento = createdUser.Nascimento,
+                Cpf = createdUser.Cpf
+            };
+
+            return userResponse;
         }
     }
 }

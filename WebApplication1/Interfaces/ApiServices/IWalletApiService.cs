@@ -1,12 +1,10 @@
-﻿using UserWalletAPI.Models;
+﻿using UserWalletAPI.DTOs;
 
 namespace UserWalletAPI.Interfaces.ApiServices
 {
     public interface IWalletApiService
     {
-        Wallet CreateWallet(Wallet wallet);
-        Wallet? GetWalletById(int id);
-        List<Wallet> GetAllWallets();
-        List<Wallet> GetWalletsByUserId(int userId);
+        WalletResponse CreateWallet(WalletRequest walletRequest);
+        IEnumerable<WalletResponse> GetWalletsByUser(int userId);
     }
 }

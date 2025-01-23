@@ -1,11 +1,9 @@
-﻿using UserWalletAPI.Models;
+﻿using UserWalletAPI.DTOs;
 
 namespace UserWalletAPI.Interfaces.ApiServices
 {
     public interface IUserApiService
     {
-        User CreateUser(User user);
-        User? GetUserById(int id);
-        List<User> GetAllUsers();
+        UserResponse CreateUser(UserRequest userRequest);
     }
 }

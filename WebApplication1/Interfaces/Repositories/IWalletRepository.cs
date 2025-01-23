@@ -1,8 +1,8 @@
 ﻿using UserWalletAPI.Models;
 
-namespace UserWalletAPI.Interfaces.Services
+namespace UserWalletAPI.Interfaces.Repositories
 {
-    public interface IWalletService
+    public interface IWalletRepository
     {
         Wallet CreateWallet(Wallet wallet);
         IEnumerable<Wallet> GetWalletsByUser(int userId);

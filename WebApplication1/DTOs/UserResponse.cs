@@ -1,6 +1,6 @@
-﻿namespace UserWalletAPI.Models
+﻿namespace UserWalletAPI.DTOs
 {
-    public class User
+    public class UserResponse
     {
         public int Id { get; set; }
         public required string Nome { get; set; }

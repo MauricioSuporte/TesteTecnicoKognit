@@ -1,33 +1,21 @@
-﻿using UserWalletAPI.Interfaces.Services;
+﻿using UserWalletAPI.Interfaces.Repositories;
+using UserWalletAPI.Interfaces.Services;
 using UserWalletAPI.Models;
 
 namespace UserWalletAPI.Services
 {
-    public class WalletService : IWalletService
+    public class WalletService(IWalletRepository walletRepository) : IWalletService
     {
-        private readonly List<Wallet> _wallets = [];
+        private readonly IWalletRepository _walletRepository = walletRepository;
 
         public Wallet CreateWallet(Wallet wallet)
         {
-            wallet.Id = _wallets.Count + 1;
-            wallet.UltimaAtualizacao = DateTime.Now;
-            _wallets.Add(wallet);
-            return wallet;
+            return _walletRepository.CreateWallet(wallet);
         }
 
-        public Wallet? GetWalletById(int id)
+        public IEnumerable<Wallet> GetWalletsByUser(int userId)
         {
-            return _wallets.FirstOrDefault(w => w.Id == id);
-        }
-
-        public List<Wallet> GetAllWallets()
-        {
-            return _wallets;
-        }
-
-        public List<Wallet> GetWalletsByUserId(int userId)
-        {
-            return _wallets.Where(w => w.UserId == userId).ToList();
+            return _walletRepository.GetWalletsByUser(userId);
         }
     }
 }

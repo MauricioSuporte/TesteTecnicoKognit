@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UserWalletAPI.DTOs;
 using UserWalletAPI.Interfaces.ApiServices;
-using UserWalletAPI.Models;
 
 namespace UserWalletAPI.Controllers
 {
@@ -11,23 +11,11 @@ namespace UserWalletAPI.Controllers
         private readonly IUserApiService _userApiService = userApiService;
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] UserRequest userRequest)
         {
-            var createdUser = _userApiService.CreateUser(user);
-            return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
-        }
+            var userResponse = _userApiService.CreateUser(userRequest);
 
-        [HttpGet("{id}")]
-        public IActionResult GetUser(int id)
-        {
-            var user = _userApiService.GetUserById(id);
-            return user is null ? NotFound() : Ok(user);
-        }
-
-        [HttpGet]
-        public IActionResult GetAllUsers()
-        {
-            return Ok(_userApiService.GetAllUsers());
+            return CreatedAtAction(nameof(CreateUser), new { id = userResponse.Id }, userResponse);
         }
     }
 }
