@@ -1,16 +1,25 @@
+using UserWalletAPI.Data;
+using Microsoft.EntityFrameworkCore;
 using UserWalletAPI.ApiServices;
 using UserWalletAPI.Interfaces.ApiServices;
 using UserWalletAPI.Interfaces.Services;
 using UserWalletAPI.Services;
+using Microsoft.Data.SqlClient;
+using UserWalletAPI.Interfaces.Repositories;
+using UserWalletAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IUserApiService, UserApiService>();
-builder.Services.AddSingleton<IWalletService, WalletService>();
-builder.Services.AddSingleton<IWalletApiService, WalletApiService>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserApiService, UserApiService>();
+builder.Services.AddScoped<IWalletService, WalletService>();
+builder.Services.AddScoped<IWalletApiService, WalletApiService>();
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

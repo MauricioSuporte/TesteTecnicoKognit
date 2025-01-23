@@ -1,27 +1,26 @@
-﻿using UserWalletAPI.Interfaces.Services;
+﻿using UserWalletAPI.Interfaces.Repositories;
+using UserWalletAPI.Interfaces.Services;
 using UserWalletAPI.Models;
 
 namespace UserWalletAPI.Services
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepository userRepository) : IUserService
     {
-        private readonly List<User> _users = [];
+        private readonly IUserRepository _userRepository = userRepository;
 
         public User CreateUser(User user)
         {
-            user.Id = _users.Count + 1;
-            _users.Add(user);
-            return user;
+            return _userRepository.CreateUser(user);
         }
 
         public User? GetUserById(int id)
         {
-            return _users.FirstOrDefault(u => u.Id == id);
+            return _userRepository.GetUserById(id);
         }
 
         public List<User> GetAllUsers()
         {
-            return _users;
+            return _userRepository.GetAllUsers();
         }
     }
 }
