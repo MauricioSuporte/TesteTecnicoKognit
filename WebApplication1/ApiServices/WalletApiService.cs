@@ -16,7 +16,7 @@ namespace UserWalletAPI.ApiServices
                 UserId = walletRequest.UserId,
                 ValorAtual = walletRequest.ValorAtual,
                 Banco = walletRequest.Banco,
-                UltimaAtualizacao = DateTime.UtcNow
+                UltimaAtualizacao = DateTime.Now
             };
 
             var createdWallet = _walletService.CreateWallet(wallet);
